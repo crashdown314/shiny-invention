@@ -87,6 +87,7 @@ public class Huffman {
 		return decode(root);
 	}
 	
+	@SuppressWarnings("unused")
 	private byte[] decode(Node root){
 		List<Byte> output = new ArrayList<Byte>();
 		int i = toUnsigned(data[0],data[1]);
@@ -303,8 +304,9 @@ public class Huffman {
 		
 		for (int b : data){
 			if (b<0) b+=TABLE_LENGTH;
-			if (DEBUG && frequencyTable[b]==0){
-				System.out.printf("DEBUG: Huffman.createTree() new byte: 0x%02X\n",b);
+			if (DEBUG){
+				if (frequencyTable[b]==0)
+					System.out.printf("DEBUG: Huffman.createTree() new byte: 0x%02X\n",b);
 			}
 			frequencyTable[b]++;
 		}
@@ -379,18 +381,5 @@ public class Huffman {
 		populateEncTree(n.getLeft(), leftList, encKey);
 		populateEncTree(n.getRight(), arrayList, encKey);
 		
-	}
-	
-	
-	
-	//Used to print a tree (badly, for debug only)
-		private String printTree(Node n, String prefix){
-			String output = prefix + n + '\n';
-			if (!n.isLeaf()){
-				output+=printTree(n.getLeft(), prefix + '\u2500');
-				output+=printTree(n.getRight(), prefix + '\u2500');
-			}
-			return output;
-		}
-		
+	}		
 }
